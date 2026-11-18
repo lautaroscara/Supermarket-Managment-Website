@@ -1,0 +1,5 @@
+config/conexion.php
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
