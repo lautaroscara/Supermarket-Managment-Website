@@ -49,7 +49,7 @@ if (isset($_POST["boton_alta"])) {
         $codigo === "" || !ctype_digit($codigo) || strlen($codigo) > 13 ||
         $descrip === "" || $stock === "" || !is_numeric($stock) ||
         $precio === "" || !is_numeric($precio) || $sector === "" ||
-        $marca === "" || $foto === ""
+        $marca === "" || $foto === "" || strlen($descrip) > 50
     ) {
         $mensaje = "Completá todos los campos con valores válidos.";
         $tipo_mensaje = "error";
@@ -111,8 +111,8 @@ require_once "../includes/header.php";
             <div class="productos">
                 <div class="ampliar">
                     <div class="foto_amp">
-                        <a href="fotos/grandes/<?php echo rawurlencode($producto["foto"]); ?>" target="_blank" title="Ampliar Foto">
-                            <img src="fotos/grandes/<?php echo rawurlencode($producto["foto"]); ?>" alt="<?php echo escapar($producto["descrip"]); ?>">
+                        <a href="../assets/fotos/grandes/<?php echo rawurlencode($producto["foto"]); ?>" target="_blank" title="Ampliar Foto">
+                            <img src="../assets/fotos/grandes/<?php echo rawurlencode($producto["foto"]); ?>" alt="<?php echo escapar($producto["descrip"]); ?>">
                         </a>
                     </div>
                     <div class="texto_amp">

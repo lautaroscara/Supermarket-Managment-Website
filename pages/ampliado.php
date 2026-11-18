@@ -1,16 +1,5 @@
 <?php
-$conexion = new mysqli("localhost", "root", "", "super");
-
-if ($conexion->connect_error) {
-    http_response_code(500);
-    die("No se pudo conectar con la base de datos.");
-}
-
-$conexion->set_charset("utf8mb4");
-
-function escapar($valor): string {
-    return htmlspecialchars((string) $valor, ENT_QUOTES, "UTF-8");
-}
+require_once "../config/conexion.php";
 
 $producto = null;
 $mensaje = "";
@@ -43,31 +32,11 @@ if ($codigo === "" || !ctype_digit($codigo) || strlen($codigo) > 13) {
 }
 
 $conexion->close();
+$titulo_pagina = "Más información";
+$ruta_base = "../";
+require_once "../includes/header.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <title>Más información</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-
-<body>
-    <header>
-        <div class="logo">
-            <a href="index.php">
-                <img src="fotos/logo1.png" alt="Inicio">
-            </a>
-        </div>
-
-        <nav>
-            <a href="buscar.php" title="Consultar Productos">Búsqueda</a>
-            <a href="alta.php" title="Agregar Productos">Alta</a>
-            <a href="baja.php" title="Eliminar Productos">Baja</a>
-            <a href="modificacion.php" title="Editar Productos">Modificación</a>
-        </nav>
-    </header>
 
     <main>
         <div class="titulo">
@@ -79,7 +48,7 @@ $conexion->close();
 
                 <?php
                 $foto = basename($producto["foto"]);
-                $foto_url = "fotos/grandes/" . rawurlencode($foto);
+                $foto_url = "../assets/fotos/grandes/" . rawurlencode($foto);
                 ?>
 
                 <div class="ampliar">
@@ -113,15 +82,7 @@ $conexion->close();
         </div>
     </main>
 
-    <footer>
-        <div class="logo">
-            <img src="fotos/logo1.png" alt="Logo">
-        </div>
+<?php
+require_once "../includes/footer.php";
+?>
 
-        <div class="info">
-            <p>W. de Tata 4699, B1676 BBE, Provincia de Buenos Aires</p>
-            <p>Telefono: 011 4750-4314</p>
-        </div>
-    </footer>
-</body>
-</html>

@@ -160,7 +160,7 @@ require_once "../includes/header.php";
                 <div class="item">
                     <div class="foto">
                         <a href="<?php echo escapar($url_detalle); ?>" title="Ver detalle">
-                            <img src="fotos/muestras/<?php echo escapar($foto); ?>" alt="<?php echo escapar($producto["descrip"]); ?>">
+                            <img src="../assets/fotos/muestras/<?php echo escapar($foto); ?>" alt="<?php echo escapar($producto["descrip"]); ?>">
                         </a>
                     </div>
                     <div class="texto">

@@ -70,35 +70,48 @@ if (isset($_POST["boton_mod"])) {
         $stock_entero = (int) $stock_validado;
         $precio_decimal = (float) $precio;
 
-        $consulta = $conexion->prepare(
-            "UPDATE productos
-             SET descrip = ?, stock = ?, precio = ?, sector = ?, marca = ?, foto = ?
-             WHERE codigo = ?"
-        );
-        $consulta->bind_param(
-            "sidssss",
-            $descrip,
-            $stock_entero,
-            $precio_decimal,
-            $sector,
-            $marca,
-            $foto,
-            $codigo
-        );
+        // Se verifica que el producto exista antes de actualizar
+        $existe = $conexion->prepare("SELECT 1 FROM productos WHERE codigo = ?");
+        $existe->bind_param("s", $codigo);
+        $existe->execute();
+        $existe->store_result();
+        $producto_existe = $existe->num_rows > 0;
+        $existe->close();
 
-        if ($consulta->execute() && $consulta->affected_rows >= 0) {
-            $mensaje = "El producto se ha modificado correctamente.";
-            $modificacion_exitosa = true;
-        } else {
-            $mensaje = "No se pudo modificar el producto.";
+        if (!$producto_existe) {
+            $mensaje = "El producto no figura en la base de datos.";
+        } else{
+
+            $consulta = $conexion->prepare(
+                "UPDATE productos
+                SET descrip = ?, stock = ?, precio = ?, sector = ?, marca = ?, foto = ?
+                WHERE codigo = ?"
+            );
+            $consulta->bind_param(
+                "sidssss",
+                $descrip,
+                $stock_entero,
+                $precio_decimal,
+                $sector,
+                $marca,
+                $foto,
+                $codigo
+            );
+
+            if ($consulta->execute()) {
+                $mensaje = "El producto se ha modificado correctamente.";
+                $modificacion_exitosa = true;
+            } else {
+                $mensaje = "No se pudo modificar el producto.";
+            }
+
+            $consulta->close();
         }
-
-        $consulta->close();
     }
 }
 
 $conexion->close();
-$titulo_pagina = "Baja de productos";
+$titulo_pagina = "Modificación de producto";
 $ruta_base = "../";
 require_once "../includes/header.php";
 ?>

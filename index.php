@@ -29,7 +29,7 @@ require_once "includes/header.php";
                 <?php while ($fila = $resultado->fetch_assoc()): ?>
 
                     <?php
-                    $url_detalle = "ampliado.php?" . http_build_query([
+                    $url_detalle = "pages/ampliado.php?" . http_build_query([
                         "codigo" => $fila["codigo"]
                     ]);
 
